@@ -27,11 +27,25 @@ of a Drupal agency.
 
 # Requirements #
 
-1. [Python 2.7.x](http://www.python.org/).
-2. [Fabric>=1.8](http://docs.fabfile.org/en/1.8/)
+* [Python 2.7.x](http://www.python.org/).
+
+* [Fabric>=1.8](http://docs.fabfile.org/en/1.8/).
 Druploy wont work for versions less then 1.8 and will mostly cause cryptic errors.
-3. [PyYAML](http://pyyaml.org).
-4.  A remote server configured with Git, Drush, PHP, Apache, Apache_mod rewrite, MySQl.
+
+* [PyYAML](http://pyyaml.org).
+
+* [Openssh-client and Openssh-server](http://www.openssh.com/).
+Druploy uses ssh connections to make changes even in the local machine. The user
+will be prompted for password input every time a local change is to be made. To
+avoid this the recommanded setup is to create a passphraseless set of ssh keys
+and map them in the ssh config file:
+
+```
+Host localhost
+  IdentityFile <path/to/private/key>
+```
+
+*  A remote server configured with Git, Drush, PHP, Apache, Apache_mod rewrite, MySQl.
 The best shortcut to configure the remote server is to use the chef Drupal
 recipe [Drupal Cookbook](https://github.com/willieseabrook/drupal-cookbook)
 
