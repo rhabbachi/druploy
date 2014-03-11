@@ -60,7 +60,7 @@ class Database(object):
         settings = {
             "host": "localhost",
             "name": self.generate_name(),
-            "username": self.deployment.project.name,
+            "username": "{0}_{1}".format(self.deployment.project.name, self.deployment.name)
             "password": ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8))
         }
         return settings
