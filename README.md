@@ -34,6 +34,8 @@ Druploy wont work for versions less then 1.8 and will mostly cause cryptic error
 
 * [PyYAML](http://pyyaml.org).
 
+* [Jinja2](http://jinja.pocoo.org/docs/#).
+
 * [Openssh-client and Openssh-server](http://www.openssh.com/).
 Druploy uses ssh connections to make changes even in the local machine. The user
 will be prompted for password input every time a local change is to be made. To
