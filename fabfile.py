@@ -17,6 +17,7 @@ from druploy.database import *
 from druploy.files import *
 from druploy.domain import *
 
+env.use_ssh_config = True
 env.forward_agent = True
 
 env.local_path = os.path.dirname(os.path.realpath(__file__))
