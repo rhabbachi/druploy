@@ -32,15 +32,15 @@ class CodeDeploymentDestination(GitWorkingCopy, DeploymentDestination):
     def collect(self, source=None):
         if not self.cloned():
             source.clone(self.path)
-            
+
         self.checkout(source.revision_or_branch)
         # TODO: Do not prune when we copy this to working copy functionality
-        self.prune()   
+        self.prune()
         self.pull()
 
     def prepare(self, source=None):
         self.checkout(source.revision_or_branch)
-        self.deployment.server.chown(self.drupal_site.path, 'admin', 'www-data', True, True)
+        self.deployment.server.chown(self.drupal_site.path, self.deployment.server.user, self.deployment.server.group, True, True)
 
     def deploy(self, source=None):
         Utils.notice("Deploying code")

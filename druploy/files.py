@@ -105,6 +105,7 @@ class FilesDestination(Files, DeploymentDestination):
         source_directory = join(self.path.source, source.asset.uid)
         destination_directory = join(self.path.destination.data, source.asset.uid)
         run("cp -rp {0} {1}".format(source_directory, destination_directory))
+        self.deployment.server.chown(destination_directory, self.deployment.server.user, self.deployment.server.group, True, True)
 
         files_directory_path = join(self.deployment.drupal_site.path.sites.default, 'files')
         self.server.rmfile(files_directory_path)
