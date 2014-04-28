@@ -65,9 +65,14 @@ class Utils:
 
     @staticmethod
     def load(filename, element):
+        config = None
         f = open(filename)
-        config = yaml.safe_load(f)[element]
-        f.close()
+        try:
+            config = yaml.safe_load(f)[element]
+        except KeyError:
+            Utils.error("The '{0}' element was not found in '{1}'.".format(element, filename))
+        finally:
+            f.close()
         return config
 
 
