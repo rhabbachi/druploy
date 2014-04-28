@@ -30,7 +30,7 @@ class Domain(object):
                 "document_root": self.deployment.drupal_site.path
             }
             upload_template('vhost.conf', filepath, context, True, env.template_dir, False, True, mode=0644)
-            self.server.symlink(filepath, join('/etc/apache2/sites-available', self.full_name), sudo=True)
+            self.server.symlink(filepath, join('/etc/apache2/sites-available', self.full_name), force=True, sudo=True)
 
     def delete(self):
         pass

@@ -23,7 +23,7 @@ class Server:
         map(lambda mkdirs: self.mkdir(mkdirs), dirs);
 
     def mkdir(self, directory=None, user=None, group=None, permissions=None, do_sudo=False):
-        if not directory:
+        if directory is None:
             raise ValueError("Invalid directory name")
 
         with settings(**self.settings()):
@@ -36,13 +36,14 @@ class Server:
             if permissions:
                 self.sudo_or_run("chmod %s %s" % (permissions, directory), do_sudo)
 
-    def symlink(self, directory=None, link=None, sudo=False):
+    def symlink(self, directory=None, link=None, force=False, sudo=False):
         if not directory or not link:
             raise ValueError("You must specify both a directory and a link")
         if not exists(directory):
             raise ValueError("The directory you are trying to link to does not exist")
 
-        self.sudo_or_run("ln -s {0} {1}".format(directory, link), sudo)
+        self.sudo_or_run("ln -s{force} {0} {1}".format(directory, link, force="f" if force else ""),
+                         sudo)
 
     def sudo_or_run(self, command, do_sudo=False):
         if do_sudo is True:
