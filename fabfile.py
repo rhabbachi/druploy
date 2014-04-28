@@ -16,6 +16,7 @@ from druploy.code import *
 from druploy.database import *
 from druploy.files import *
 from druploy.domain import *
+from druploy.ci import *
 
 env.use_ssh_config = True
 env.forward_agent = True
@@ -258,4 +259,12 @@ def drush_alias_create():
         Utils.error("Could not sync aliases")
         raise
 
-
+@task
+def ci(config=None):
+    """
+    Add continus integration support for this project.
+    """
+    execute(init)
+    with hide(*env.clean):
+        env.ci = CI(env.deployment, config)
+        env.ci.create()
