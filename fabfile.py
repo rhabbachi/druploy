@@ -233,7 +233,7 @@ def deploy():
 
 
 @task
-def domain(name=None, aliases=[]):
+def domain(name=None, aliases=[], username=None, password=None):
     """
     Configure a domain to run on the current deployment
     """
@@ -241,7 +241,7 @@ def domain(name=None, aliases=[]):
     try:
         with hide(*env.clean):
             print(env.deployment)
-            env.domain = Domain(env.deployment, name, aliases)
+            env.domain = Domain(env.deployment, name, aliases, username, password)
             env.domain.create()
             env.domain.enable()
     except AttributeError:
