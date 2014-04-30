@@ -35,7 +35,6 @@ class Domain(object):
                 # Site will be password protected
                 # Create password file
                 self.htpasswd()
-                print ("password protected")
                 require = "valid-user"
             context = {
                 "name": self.name,
