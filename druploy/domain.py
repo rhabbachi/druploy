@@ -46,7 +46,11 @@ class Domain(object):
                 "auth_user_file": self.htpasswd_path,
                 "require": require
             }
-            upload_template('vhost.conf', self.domain_path, context, True, env.template_dir, False, True, mode=0644)
+            upload_template('vhost.conf', self.domain_path, context,
+                            use_jinja=True,
+                            template_dir=env.template_dir,
+                            backup=False,
+                            mode=0644)
             self.server.symlink(self.domain_path, join('/etc/apache2/sites-available', self.full_name), force=True, sudo=True)
 
     def delete(self):
