@@ -35,7 +35,7 @@ try:
     env.deployment = None
     env.domain = None
     env.clean = ()
-except AgileProjectError, e:
+except AgileProjectError:
     Utils.error("There was a problem initializing the task, execution failed")
     raise
 
