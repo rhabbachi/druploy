@@ -8,6 +8,7 @@ from fabric.contrib.console import *
 
 from druploy.core import *
 from druploy.utils import Utils
+from druploy.config import Config
 from druploy.exceptions import *
 from druploy.server import *
 from druploy.project import *
@@ -45,7 +46,7 @@ def server(name=None):
     """
         Set the current server
     """
-    config = Utils.load(os.path.join(env.local_path, 'servers.yaml'), name)
+    config = Config.load(os.path.join(env.local_path, 'servers.yaml'), name)
     env.hosts = [config['host']]
     env.host_string = config['host']
     env.user = config['user']

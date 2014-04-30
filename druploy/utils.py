@@ -57,25 +57,20 @@ class Utils:
         return puts(indent(green(text), shift))
 
     @staticmethod
+    def fastprint(text="", shift=0):
+        return fastprint(indent(green(text), shift))
+
+    @staticmethod
+    def warn(text="", shift=0):
+        return warn(indent(green(text), shift))
+
+    @staticmethod
     def error(text="", shift=0):
         return puts(indent(red(text), shift))
 
     @staticmethod
     def timestamp():
         return strftime("%Y-%m-%dT%H-%M-%S+0000", gmtime());
-
-    @staticmethod
-    def load(filename, element):
-        config = None
-        f = open(filename)
-        try:
-            config = yaml.safe_load(f)[element]
-        except KeyError:
-            Utils.error("The '{0}' element was not found in '{1}'.".format(element, filename))
-        finally:
-            f.close()
-        return config
-
 
 class AssetParseError(AgileProjectError):
     pass
