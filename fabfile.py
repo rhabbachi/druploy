@@ -18,34 +18,26 @@ from druploy.database import *
 from druploy.files import *
 from druploy.domain import *
 
-env.use_ssh_config = True
-env.forward_agent = True
-
-env.local_path = os.path.dirname(os.path.realpath(__file__))
-env.template_dir = os.path.join(env.local_path, "templates")
-
 # Initialization
-env.server = None
-env.project = None
-
-env.source_project = None
-env.source_deployment = None
-env.source_code = None
-env.source_files = None
-env.source_database = None
-
-env.deployment = None
-env.domain = None
-
-@runs_once
-def init():
-    try:
-        #env.clean = 'running', 'stdout', 'stderr'
-        env.clean = ()
-
-    except AgileProjectError, e:
-        puts("There was a problem initializing the task, execution failed")
-        raise
+try:
+    Utils.notice("Run initialisation code.")
+    env.use_ssh_config = True
+    env.forward_agent = True
+    env.local_path = os.path.dirname(os.path.realpath(__file__))
+    env.template_dir = os.path.join(env.local_path, "templates")
+    env.server = None
+    env.project = None
+    env.source_project = None
+    env.source_deployment = None
+    env.source_code = None
+    env.source_files = None
+    env.source_database = None
+    env.deployment = None
+    env.domain = None
+    env.clean = ()
+except AgileProjectError, e:
+    Utils.error("There was a problem initializing the task, execution failed")
+    raise
 
 
 @task
@@ -68,7 +60,6 @@ def project(name=None):
     """
     Set the current project for Druploy
     """
-    execute(init)
     try:
         env.project = ManagedProject(env.server, name)
         if not env.project.exists():
@@ -86,7 +77,6 @@ def project_create(name=None):
     """
     Create a project on a server
     """
-    execute(init)
     try:
         Project.create(Project(name, env.server))
     except AgileProjectError, e:
@@ -98,7 +88,6 @@ def project_list(archive=False):
     """
     List all projects on a server
     """
-    execute(init)
     try:
         with hide(*env.clean):
             Utils.notice("The server has the following projects")
@@ -112,7 +101,6 @@ def deployment_list(project=None):
     """
     List all deployments for a project (optional) on a server
     """
-    execute(init)
     try:
         with hide(*env.clean):
             if project is None:
@@ -130,7 +118,6 @@ def source(drupal_root=None):
     When taking the database/files from a project not managed by Druploy, tell it
     where the drupal root is
     """
-    execute(init)
     try:
         with hide(*env.clean):
             env.source_project = ExternalProject(env.server, drupal_root)
@@ -145,7 +132,6 @@ def code(url=None, branch='master', revision=None):
     """
     Tell Druploy where to get the code and what branch/revision to deploy
     """
-    execute(init)
     try:
         with hide(*env.clean):
             env.source_code = CodeDeploymentSource(env.source_deployment, url, branch, revision)
@@ -159,7 +145,6 @@ def database(updating=True, resetting=False, installing=False):
     """
     Tell Druploy what method to use to deploy the database
     """
-    execute(init)
     try:
         with hide(*env.clean):
             if updating == 'True':
@@ -180,7 +165,6 @@ def files(updating=True, resetting=False):
     """
     Tell Druploy what method to use to deploy the files
     """
-    execute(init)
     try:
         with hide(*env.clean):
             if updating == 'True':
@@ -199,7 +183,6 @@ def deployment(name=None):
     """
     Tell Druploy what deployment to use.
     """
-    execute(init)
     try:
         with hide(*env.clean):
             # default name to branch name
@@ -216,7 +199,6 @@ def deploy():
     """
     Deploy using the configured code, files, database, and deployment.
     """
-    execute(init)
     try:
         with hide(*env.clean):
             if env.deployment is None:
@@ -238,7 +220,6 @@ def domain(name=None, aliases=[], username=None, password=None):
     """
     Configure a domain to run on the current deployment
     """
-    execute(init)
     try:
         with hide(*env.clean):
             print(env.deployment)
@@ -257,7 +238,6 @@ def drush_alias_create():
     """
     Create drush aliases for each deployment in each project
     """
-    execute(init)
     try:
         with hide(*env.clean):
             drupal_roots = DrupalRoot.list(env.project)
