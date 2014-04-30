@@ -1,3 +1,4 @@
+# vim: set syntax=python ts=4 sw=4 expandtab:
 import os
 from datetime import datetime
 from fabric.api import *

@@ -1,3 +1,4 @@
+# vim: set syntax=python ts=4 sw=4 expandtab:
 
 class AgileProjectError(Exception):
     pass

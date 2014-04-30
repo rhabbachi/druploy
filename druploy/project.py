@@ -1,3 +1,4 @@
+# vim: set syntax=python ts=4 sw=4 expandtab:
 from fabric.api import *
 from fabric.utils import *
 from fabric.colors import *

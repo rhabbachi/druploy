@@ -1,3 +1,4 @@
+# vim: set syntax=python ts=4 sw=4 expandtab:
 from datetime import *
 from time import *
 from os.path import join
