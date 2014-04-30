@@ -7,7 +7,7 @@ from fabric.contrib.files import *
 from fabric.contrib.console import *
 
 from druploy.core import *
-from druploy.utils import *
+from druploy.utils import Utils
 from druploy.exceptions import *
 from druploy.server import *
 from druploy.project import *
